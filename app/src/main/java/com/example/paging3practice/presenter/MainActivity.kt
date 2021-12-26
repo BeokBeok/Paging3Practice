@@ -1,11 +1,10 @@
 package com.example.paging3practice.presenter
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import com.example.paging3practice.R
 import com.example.paging3practice.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -21,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setupBinding()
+        showContent()
 
         val reposAdapter = ReposAdapter().also {
             binding.rvMain.adapter = it
@@ -28,14 +28,16 @@ class MainActivity : AppCompatActivity() {
 
         binding.rvMain.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy != 0) viewModel.fetchRepos()
+                if (dy != 0) showContent()
             }
         })
 
         lifecycleScope.launch {
             viewModel.pagingData.collectLatest(reposAdapter::submitData)
         }
+    }
 
+    private fun showContent() {
         viewModel.fetchRepos()
     }
 
