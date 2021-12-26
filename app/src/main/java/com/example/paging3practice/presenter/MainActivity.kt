@@ -22,8 +22,8 @@ class MainActivity : AppCompatActivity() {
         setupBinding()
         showContent()
 
-        val reposAdapter = ReposAdapter().also {
-            binding.rvMain.adapter = it
+        val reposAdapter = ReposAdapter().apply {
+            binding.rvMain.adapter = withLoadStateFooter(ReposLoadStateAdapter { retry() } )
         }
 
         binding.rvMain.addOnScrollListener(object : RecyclerView.OnScrollListener() {
