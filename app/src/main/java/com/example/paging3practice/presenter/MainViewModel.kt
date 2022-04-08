@@ -16,8 +16,8 @@ import kotlinx.coroutines.flow.flowOf
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val fetchGithubRepositoriesUseCase: FetchGithubRepositoriesUseCase
-): ViewModel() {
+    private val githubPagingSource: GithubPagingSource
+) : ViewModel() {
 
     var pagingData: Flow<PagingData<Repo>> = flowOf()
         private set
@@ -28,7 +28,7 @@ class MainViewModel @Inject constructor(
                 pageSize = NETWORK_PAGE_SIZE,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = { GithubPagingSource(fetchGithubRepositoriesUseCase) }
+            pagingSourceFactory = { githubPagingSource }
         ).flow.cachedIn(viewModelScope)
     }
 

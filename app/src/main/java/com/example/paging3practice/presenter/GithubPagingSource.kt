@@ -4,8 +4,9 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.paging3practice.domain.model.Repo
 import com.example.paging3practice.domain.usecase.FetchGithubRepositoriesUseCase
+import javax.inject.Inject
 
-class GithubPagingSource(
+class GithubPagingSource @Inject constructor(
     private val fetchGithubRepositoriesUseCase: FetchGithubRepositoriesUseCase
 ) : PagingSource<Int, Repo>() {
 

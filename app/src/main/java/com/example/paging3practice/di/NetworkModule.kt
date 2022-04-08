@@ -16,7 +16,9 @@ import retrofit2.Retrofit
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkModule {
+object NetworkModule {
+
+    private const val BASE_URL = "https://api.github.com/"
 
     @Provides
     @Singleton
@@ -46,8 +48,4 @@ class NetworkModule {
         .client(okHttpClient)
         .addConverterFactory(jsonConverterFactory)
         .build()
-
-    companion object {
-        private const val BASE_URL = "https://api.github.com/"
-    }
 }
